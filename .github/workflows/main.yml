@@ -35,4 +35,4 @@ jobs:
         IMAGE_TAG: paystack-integration
       run: |
         docker build -t powerline/powerline .
-        docker push 886436956433.dkr.ecr.eu-west-2.amazonaws.com/powerline/powerline:latest 
+        docker push 886436956433.dkr.ecr.eu-west-2.amazonaws.com/powerline/powerline:latest
