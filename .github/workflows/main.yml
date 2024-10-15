@@ -48,7 +48,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: teeman:latest
+          tags: powerline:latest
 
       # Step 8: Deploy to EKS
       - name: Deploy to EKS
