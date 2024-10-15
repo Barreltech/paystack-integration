@@ -10,7 +10,7 @@ jobs:
   build:
     
     name: Build Image
-    runs-on: windows
+    runs-on: windows-latest
 
    
     steps:
