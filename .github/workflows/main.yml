@@ -35,12 +35,20 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Push Docker Image
-        if: success()
-        run: |
-         IMAGE_TAG=${{ github.sha }}
-         REPOSITORY_URI=${{ secrets.ECR_REPO }}
-         docker push $REPOSITORY_URI:$IMAGE_TAG
+      # - name: Push Docker Image
+      #   if: success()
+      #   run: |
+      #    IMAGE_TAG=${{ github.sha }}
+      #    REPOSITORY_URI=${{ secrets.ECR_REPO }}
+      #    docker push $REPOSITORY_URI:$IMAGE_TAG
+
+      - name: build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: teeman:latest
 
       # Step 8: Deploy to EKS
       - name: Deploy to EKS
