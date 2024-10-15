@@ -38,7 +38,7 @@ jobs:
       - name: Push Docker Image
         if: success()
         run: |
-         IMAGE_TAG=${{ steps.meta.outputs.tags }}
+         IMAGE_TAG=${{ github.sha }}
          REPOSITORY_URI=${{ secrets.ECR_REPO }}
          docker push $REPOSITORY_URI:$IMAGE_TAG
 
