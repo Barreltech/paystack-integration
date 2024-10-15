@@ -31,7 +31,7 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-publish
-      shell: bash
+      shell: powershell
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: "powerline"
