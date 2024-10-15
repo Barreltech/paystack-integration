@@ -24,28 +24,27 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      # Step 4: Log in to AWS ECR
-      - name: Log in to Amazon ECR
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
-      # Step 5: Build and tag Docker image
-      - name: Build and tag Docker image
+      - name: Push Docker Image
+        if: success()
         run: |
-          IMAGE_TAG=${{ github.sha }}
-          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG .
-          docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG
-
-      # Step 6: Push Docker image to Amazon ECR
-      - name: Push Docker image to Amazon ECR
-        run: |
-          IMAGE_TAG=${{ github.sha }}
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG
-
-      # Step 7: Set up kubectl
-      - name: Setup kubectl
-        run: |
-          aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.AWS_EKS_CLUSTER }}
+         IMAGE_TAG=${{ github.sha }}
+         REPOSITORY_URI=${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}
+         docker push $REPOSITORY_URI:$IMAGE_TAG
+        env:
+         AWS_REGION: ${{ secrets.AWS_REGION }}
+         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # Step 8: Deploy to EKS
       - name: Deploy to EKS
