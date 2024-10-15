@@ -33,9 +33,9 @@ jobs:
       id: build-publish
       shell: powershell
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: powerline
         ECR_REPOSITORY: "powerline"
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest."
-        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+        docker build -t powerline/powerline:latest .
+        docker push -a powerline/powerline
