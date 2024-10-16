@@ -31,7 +31,7 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-publish
-      shell: powershell
+      shell: bash
       env:
         ECR_REGISTRY: powerline
         ECR_REPOSITORY: "powerline"
