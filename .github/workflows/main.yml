@@ -33,9 +33,9 @@ jobs:
       id: build-publish
       shell: bash
       env:
-        ECR_REGISTRY: powerline
-        ECR_REPOSITORY: "powerline"
+        ECR_REGISTRY: ${{REGISTRY}}
+        ECR_REPOSITORY: ${{REPOSITORY}}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t powerline/powerline:latest .
-        docker push -a powerline/powerline
+        docker build -t $REGISTRY/$REPOSITORY:latest .
+        docker push -a $REGISTRY/$REPOSITORY
