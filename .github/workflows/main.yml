@@ -54,6 +54,6 @@ jobs:
       run: |
           IMAGE_TAG=${{ github.sha }}
           kubectl set image deployment/${{ secrets.K8S_DEPLOYMENT_NAME }} \
-            ${{ secrets.K8S_CONTAINER_NAME }}=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
+            ${{ secrets.K8S_CONTAINER_NAME }}=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.use-east-1.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:$IMAGE_TAG
 
 
