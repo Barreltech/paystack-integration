@@ -33,8 +33,8 @@ jobs:
       id: build-publish
       shell: bash
       env:
-        ECR_REGISTRY: ${{REGISTRY}}
-        ECR_REPOSITORY: ${{REPOSITORY}}
+        ECR_REGISTRY: ${{secrets.REGISTRY}}
+        ECR_REPOSITORY: ${{secrets.REPOSITORY}}
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $REGISTRY/$REPOSITORY:latest .
